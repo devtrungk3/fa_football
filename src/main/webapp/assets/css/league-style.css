@@ -1,0 +1,96 @@
+.league-search-box {
+	background-color: #fff;
+	box-shadow: 0 1px 1px #d8d8d8;
+	padding: 10px 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	position: relative;
+}
+
+.search-input-group {
+	border-collapse: separate;
+	display: table;
+	position: relative;
+}
+
+.search-input-group .form-control {
+	display: table-cell;
+	float: left;
+	margin-bottom: 0;
+	position: relative;
+	width: 100%;
+	z-index: 2;
+}
+
+.search-input-group .form-control:first-child {
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.search-btn {
+	display: table-cell;
+	font-size: 0;
+	position: relative;
+	vertical-align: middle;
+	white-space: nowrap;
+	width: 1%;
+}
+
+.search-btn:last-child>.btn {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	margin-left: -1px;
+	z-index: 2;
+}
+
+.search-btn>.btn {
+	padding-bottom: 6px;
+	padding-top: 6px;
+	position: relative;
+}
+
+#league-list {
+	background-color: #fff;
+	margin-top: 2rem;
+	border-radius: 5px;
+	padding: 15px 0;
+}
+
+.tournament-card {
+	display: block;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 0 auto;
+	text-decoration: none;
+	color: inherit;
+	transition: box-shadow 0.3s ease;
+}
+
+.tournament-card:hover {
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tournament-status {
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-weight: bold;
+	color: white;
+}
+
+.status-ongoing {
+	background-color: #28a745;
+}
+
+.status-upcoming {
+	background-color: #ffc107;
+}
+
+.status-ended {
+	background-color: #dc3545;
+}
+
+.icon-text {
+	margin-left: 5px;
+}

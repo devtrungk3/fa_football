@@ -1,0 +1,5 @@
+.custom-chart-label {
+    color: #fff !important;  /* Đảm bảo màu trắng không bị ghi đè */
+    font-weight: bold;
+    font-size: 14px;
+}
