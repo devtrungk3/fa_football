@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fa.football.entity.Event;
 import fa.football.entity.FootballMatch;
@@ -14,11 +16,13 @@ import fa.football.entity.MatchEvent;
 import fa.football.entity.MatchEventPK;
 import fa.football.entity.Player;
 import fa.football.entity.Standing;
+import fa.football.entity.Team;
 import fa.football.repository.EventRepository;
 import fa.football.repository.FootballMatchRepository;
 import fa.football.repository.MatchEventRepository;
 import fa.football.repository.PlayerRepository;
 import fa.football.repository.StandingRepository;
+import fa.football.repository.TeamRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -40,7 +44,10 @@ public class FootballMatchServiceImpl implements FootballMatchService{
 
 	@Autowired
     private MatchEventRepository matchEventRepository;
-
+	
+	@Autowired
+    private TeamRepository teamRepository;
+	
 	
 	@Override
 	public List<FootballMatch> getAllMatches() {
@@ -112,12 +119,17 @@ public class FootballMatchServiceImpl implements FootballMatchService{
     }
 
 	@Override
+	@Transactional
     public void addEvent(int matchId, int playerId, int eventId, int minute, String description){
         MatchEventPK matchEventPK = new MatchEventPK(matchId,playerId,eventId,minute);
         MatchEvent m = new MatchEvent(matchEventPK, minute, description);
-        
-        Event event = new Event();
-        event.setEventId(eventId);
+        Team team = teamRepository.findByPlayerId(playerId).orElseThrow(() -> new NotFoundException("Not found team"));
+        FootballMatch matchForFirstTeam = footballMatchRepository.findByFirstTeam(matchId, team.getTeamId()).orElse(null);
+        FootballMatch matchForSecondTeam = footballMatchRepository.findBySecondTeam(matchId, team.getTeamId()).orElse(null);
+        if (matchForFirstTeam == null && matchForSecondTeam == null) {
+        	throw new NotFoundException("not found football match");
+        }
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Not found event"));
         
         FootballMatch footballMatch = new FootballMatch();
         footballMatch.setMatchId(matchId);
@@ -130,6 +142,17 @@ public class FootballMatchServiceImpl implements FootballMatchService{
         m.setPlayer(player);
 
         matchEventRepository.save(m);
+        
+        if (event.getEventName().equals("ghi bàn")) {
+	        if (matchForFirstTeam != null) {
+	        	matchForFirstTeam.setFirstTeamScore(matchForFirstTeam.getFirstTeamScore()+1);
+	        	footballMatchRepository.save(matchForFirstTeam);
+	        } else {
+	        	matchForSecondTeam.setSecondTeamScore(matchForSecondTeam.getSecondTeamScore()+1);
+	        	footballMatchRepository.save(matchForSecondTeam);
+	        }
+        }
+        
     }
 	
 	@Override

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team, Integer> {
 	List<Team> findByLeague_LeagueId(int leagueId);
@@ -31,5 +32,10 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
     @Query(value = "update team set coach_name=?, team_name=? where team_id=?", nativeQuery = true)
     void updateTeam(String coach, String team, int id);
 
-
+    @Query("""
+    		SELECT t FROM Team t 
+    		JOIN t.players p
+    		WHERE p.id = :playerId
+    		""")
+    Optional<Team> findByPlayerId(@Param("playerId") int playerId);
 }
