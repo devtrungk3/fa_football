@@ -47,9 +47,9 @@
                             <li><a href="#">Giải đấu</a>
                                 <ul class="dropdown">
                                     <li><a href="${pageContext.request.contextPath }/league/list">Danh sách giải</a></li>
-                                    <c:if test="${account.role.equals('LEAGUE')}">
+                                    <security:authorize access="hasRole('LEAGUE')">
                                     	<li><a href="${pageContext.request.contextPath }/league/create">Tạo giải mới</a></li>
-                                    </c:if>
+                                    </security:authorize>
                                 </ul>
                             </li>
                             <li><a href="${pageContext.request.contextPath }/team/all">Đội bóng</a></li>
@@ -57,15 +57,15 @@
         						<li><a href="">Tài khoản</a>
 	                                <ul class="dropdown">
 	                                	<li><a href="${pageContext.request.contextPath }/profile">Thông tin chung</a></li>
-	                                	<c:if test="${account.role.equals('ADMIN') }">
+	                                	<security:authorize access="hasRole('ADMIN')">
 	                                		<li><a href="${pageContext.request.contextPath }/admin/">Trang quản lý</a></li>
-	                                	</c:if>
-	                                	<c:if test="${account.role.equals('LEAGUE') }">
+	                                	</security:authorize>
+	                                	<security:authorize access="hasRole('LEAGUE')">
 	                                    		<li><a href="${pageContext.request.contextPath }/league/dashboard">Quản lý các giải đấu</a></li>		
-	                                    </c:if>
-	                                	<c:if test="${account.role.equals('TEAM') }">
+	                                    </security:authorize>
+	                                    <security:authorize access="hasRole('TEAM')">
                                 			<li><a href="${pageContext.request.contextPath }/team/home">Đội bóng của tôi</a></li>	
-	                                	</c:if>
+	                                	</security:authorize>
 										<li>
 											<form action="${pageContext.request.contextPath }/logout" method="post">
 		                                    	<button type="submit">Đăng xuất</button>

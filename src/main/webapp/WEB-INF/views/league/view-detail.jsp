@@ -52,7 +52,7 @@
 							<div class="schedule-text">
 								<h4 class="st-title rounded">LỊCH THI ĐẤU</h4>
 								<div class="d-flex justify-content-between mb-4">
-									<c:if test="${role == 'ROLE_LEAGUE' }">
+									<security:authorize access="hasRole('LEAGUE')">
 										<c:if test="${league.format == 'mixed'}">
 												data-toggle="modal" data-target="#createGroupModal">
 												Tạo Bảng Đấu</button>
@@ -61,7 +61,7 @@
 											data-toggle="modal" data-target="#addMatchModal"
 											<c:if test="${!canCreateMatches ||!owner}">disabled</c:if>>
 											Thêm Trận Đấu</button>
-									</c:if>
+									</security:authorize>
 								</div>
 								<ul class="nav nav-tabs mb-3" id="roundTabs" role="tablist">
 									<li class="nav-item" role="presentation"><a
@@ -210,8 +210,7 @@
 															<td class="st-option">
 																<div class="so-text">${match.location}</div> <c:choose>
 																	<c:when test="${match.matchDatetime.isBefore(now)}">
-																		<h4>${match.firstTeamScore}-
-																			${match.secondTeamScore}</h4>
+																		<h4>${match.firstTeamScore} - ${match.secondTeamScore}</h4>
 																	</c:when>
 																	<c:otherwise>
 																		<h4>VS</h4>

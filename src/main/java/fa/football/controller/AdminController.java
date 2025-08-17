@@ -88,13 +88,14 @@ public class AdminController {
 			data.add(new ArrayList<>(info));
 			info.clear();
 		});
+		model.addAttribute("id", "email");
 		model.addAttribute("pages", accounts);
 		model.addAttribute("data", data);
 		model.addAttribute("columnNames", columnNames);
 		return "admin/templates/table";
 	}
 	
-	@PostMapping("/delete")
+	@PostMapping("account/delete")
 	public String deleteAcc(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
 		if (!email.equals("admin@gmail.com")) {
 			accountService.delete(email);

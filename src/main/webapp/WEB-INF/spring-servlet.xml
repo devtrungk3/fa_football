@@ -41,7 +41,7 @@
   <!-- Define Database Datasource -->
   <bean id="dataSource"
   	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
     <property name="url" value="jdbc:mysql://localhost:3306/fa_football" />
     <property name="username" value="root" />
     <property name="password" value="trung2003" />
@@ -59,7 +59,7 @@
 		</property>
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
